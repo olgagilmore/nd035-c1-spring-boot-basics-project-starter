@@ -24,11 +24,11 @@ Your tech lead is excited to work with you and has laid out a development roadma
 3. Application tests with Selenium
 
 ### The Back-End
-The back-end is all about security and connecting the front-end to database data and actions. 
+The back-end is all about com.udacity.jwdnd.course1.cloudstorage.security and connecting the front-end to database data and actions. 
 
 1. Managing user access with Spring Security
- - You have to restrict unauthorized users from accessing pages other than the login and signup pages. To do this, you must create a security configuration class that extends the `WebSecurityConfigurerAdapter` class from Spring. Place this class in a package reserved for security and configuration. Often this package is called `security` or `config`.
- - Spring Boot has built-in support for handling calls to the `/login` and `/logout` endpoints. You have to use the security configuration to override the default login page with one of your own, discussed in the front-end section.
+ - You have to restrict unauthorized users from accessing pages other than the login and signup pages. To do this, you must create a com.udacity.jwdnd.course1.cloudstorage.security configuration class that extends the `WebSecurityConfigurerAdapter` class from Spring. Place this class in a package reserved for com.udacity.jwdnd.course1.cloudstorage.security and configuration. Often this package is called `com.udacity.jwdnd.course1.cloudstorage.security` or `config`.
+ - Spring Boot has built-in support for handling calls to the `/login` and `/logout` endpoints. You have to use the com.udacity.jwdnd.course1.cloudstorage.security configuration to override the default login page with one of your own, discussed in the front-end section.
  - You also need to implement a custom `AuthenticationProvider` which authorizes user logins by matching their credentials against those stored in the database.  
 
 
@@ -66,7 +66,7 @@ The home page is the center of the application and hosts the three required piec
   - The user should be able to upload files and see any files they previously uploaded. 
 
   - The user should be able to view/download or delete previously-uploaded files.
-  - Any errors related to file actions should be displayed. For example, a user should not be able to upload two files with the same name, but they'll never know unless you tell them!
+  - Any errors related to userFile actions should be displayed. For example, a user should not be able to upload two files with the same name, but they'll never know unless you tell them!
 
 
  ii. Notes

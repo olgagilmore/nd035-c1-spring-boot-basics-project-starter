@@ -74,7 +74,7 @@ public class CredentialTabPage {
         }
         wait.until(ExpectedConditions.visibilityOf(navCredential)).click();
         //navCredential.click();
-        //wait.until(ExpectedConditions.visibilityOf(addButton));
+        wait.until(ExpectedConditions.visibilityOf(addButton));
         List<String> details = new ArrayList<>(List.of(urlList.get(index).getText(),
                 usernameList.get(index).getText(),
                 passwordList.get(index).getText()));

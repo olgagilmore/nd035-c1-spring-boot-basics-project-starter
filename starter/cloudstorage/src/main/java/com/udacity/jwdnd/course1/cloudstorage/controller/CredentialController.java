@@ -63,7 +63,7 @@ public class CredentialController {
         User user = userService.getUser(auth.getPrincipal().toString());
         //Users userDb = userService.getUser(auth.getName());
         //model.addAttribute("credentials", this.credentialService.getCredentialByUserId(user.getUserId()));
-        return "home";
+        return "redirect:/home";
     }
     @GetMapping("/credential-get/{credentialId}")
     public String getcredential(Authentication auth, @PathVariable(value = "credentialId") Integer credentialId, Model model) {

@@ -232,8 +232,8 @@ class CloudStorageApplicationTests {
 		List<String> detail = credentialTabPage.getDetail(driver, 0);
 
 
-		//Assertions.assertEquals(url, detail.get(0));
-		//Assertions.assertEquals(user, detail.get(1));
+		Assertions.assertEquals(url, detail.get(0));
+		Assertions.assertEquals(user, detail.get(1));
 
 
 		//password is encrypted thus not equal
@@ -254,8 +254,8 @@ class CloudStorageApplicationTests {
 		driver.get(this.baseUrl + "/home");
 		detail = credentialTabPage.getDetail(driver,0);
 
-		//Assertions.assertEquals(url, detail.get(0));
-		//Assertions.assertEquals("Test", detail.get(1));
+		Assertions.assertEquals(url, detail.get(0));
+		Assertions.assertEquals("Test", detail.get(1));
 
 
 		//password is encrypted thus not equal

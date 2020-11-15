@@ -1,9 +1,9 @@
 package com.udacity.jwdnd.course1.cloudstorage.controller;
 
 import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
+import com.udacity.jwdnd.course1.cloudstorage.model.File;
 import com.udacity.jwdnd.course1.cloudstorage.model.Note;
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
-import com.udacity.jwdnd.course1.cloudstorage.model.UserFile;
 import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
 import com.udacity.jwdnd.course1.cloudstorage.services.FileService;
 import com.udacity.jwdnd.course1.cloudstorage.services.NoteService;
@@ -19,12 +19,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class HomeController {
@@ -97,11 +95,11 @@ public class HomeController {
 
         try {
             //String filename, String contenttype, String filesize, Integer userid, byte[] filedata
-            fileService.uploadFile( new UserFile(fileUpload.getOriginalFilename(),fileUpload.getContentType(),
+            fileService.uploadFile( new File(fileUpload.getOriginalFilename(),fileUpload.getContentType(),
                                     fileUpload.getSize() + "", user.getUserId(),fileUpload.getBytes()) );
 
             // reload files list
-            List<UserFile> files = fileService.getAllFilesByUserId(user.getUserId());
+            List<File> files = fileService.getAllFilesByUserId(user.getUserId());
             //model.addAttribute("fileUploadSuccess", "File uploaded successfully!");
             model.addAttribute("files", files);
             //redirectAttributes.addFlashAttribute("successMessage", "File saved successfully");
@@ -129,7 +127,7 @@ public class HomeController {
             fileService.deleteFile(fileId);
 
             // reload files list
-            List<UserFile> files = fileService.getAllFilesByUserId(user.getUserId());
+            List<File> files = fileService.getAllFilesByUserId(user.getUserId());
             model.addAttribute("successMessage", "File is deleted successfully!");
             //model.addAttribute("files", files);
         } catch (Exception e) {
@@ -143,7 +141,7 @@ public class HomeController {
     @GetMapping("/file-view/{fileId}")
     public ResponseEntity<Resource> getFile(@PathVariable Integer fileId, Authentication authentication)  {
         //add some code here
-        UserFile file = fileService.getFileById(fileId);
+        File file = fileService.getFileById(fileId);
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(file.getContenttype())).header(HttpHeaders.CONTENT_DISPOSITION,
                         "attachment; filename=\"" + file.getFilename() + "\"")

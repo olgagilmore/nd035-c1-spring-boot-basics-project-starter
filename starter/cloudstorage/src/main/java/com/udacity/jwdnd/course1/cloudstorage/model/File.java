@@ -1,6 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage.model;
 
-public class UserFile {
+public class File {
     private Integer fileId;
     private String filename;
     private String contenttype;
@@ -8,7 +8,7 @@ public class UserFile {
     private Integer userid;
     private byte[] filedata;
 
-    public UserFile(String filename, String contenttype, String filesize, Integer userid, byte[] filedata) {
+    public File(String filename, String contenttype, String filesize, Integer userid, byte[] filedata) {
         //this.fileId = fileId;
         this.filename = filename;
         this.contenttype = contenttype;

@@ -16,12 +16,12 @@ public interface NoteMapper {
 
     @Select("SELECT * FROM NOTES WHERE userid = #{userId}")
     List<Note> getAllNotesForUserId(Integer userId);
-    
+
     @Insert("INSERT INTO NOTES (notetitle, notedescription, userid) VALUES(#{notetitle}, #{notedescription}, #{userid})")
-    @Options(useGeneratedKeys = true, keyProperty = "noteId")
+    @Options(useGeneratedKeys = true, keyProperty = "noteid")
     int insert(Note note);
 
-    @Update("UPDATE NOTES set notetitle= #{notetitle}, notedescription = #{desc}, userId= #{userId} where noteid = #{noteid}")
+    @Update("UPDATE NOTES set notetitle= #{notetitle}, notedescription = #{notedescription}, userid= #{userid} where noteid = #{noteid}")
     int update(Note note);
 
     @Delete("DELETE FROM NOTES WHERE noteid = #{id}")

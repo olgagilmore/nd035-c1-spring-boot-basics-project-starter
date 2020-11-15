@@ -1,6 +1,7 @@
 package com.udacity.jwdnd.course1.cloudstorage.controller;
 
 import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
+import com.udacity.jwdnd.course1.cloudstorage.model.Note;
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
 import com.udacity.jwdnd.course1.cloudstorage.model.UserFile;
 import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
@@ -41,7 +42,16 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    public String listUploadedFiles(Model model) throws IOException {
+    public String listUploadedFiles(Authentication auth, Model model) throws IOException {
+        User user = userService.getUser(auth.getPrincipal().toString());
+        Integer userId= user.getUserId();
+        model.addAttribute("files", this.fileService.getAllFilesByUserId(userId));
+        model.addAttribute("credentials", this.credentialService.getCredentialByUserId(userId));
+        model.addAttribute("notes", this.noteService.getAllNotesForUserId(userId));
+        model.addAttribute("newNote", new Note());
+        model.addAttribute("newCredential", new Credential());
+
+        model.addAttribute("credentialService", credentialService);
 
         /*model.addAttribute("files", storageService.loadAll().map(
                 path -> MvcUriComponentsBuilder.fromMethodName(HomeController.class,
@@ -49,6 +59,15 @@ public class HomeController {
                 .collect(Collectors.toList()));*/
 
         return "home";
+    }
+
+    @PostMapping("/logout")
+    public String logout(){
+        return "login?logout";
+    }
+    @GetMapping("/logout")
+    public String logoutView(){
+        return "redirect:/login?logout";
     }
 
     @PostMapping("/file-upload")
@@ -104,19 +123,21 @@ public class HomeController {
     @GetMapping("/file-delete/{fileId}")
     public String deleteFile(@PathVariable Integer fileId, Authentication authentication, Model model) {
         User user = userService.getUser(authentication.getPrincipal().toString());
+        model.addAttribute("errorMessage", false);
+        model.addAttribute("successMessage", false);
         try {
             fileService.deleteFile(fileId);
 
             // reload files list
             List<UserFile> files = fileService.getAllFilesByUserId(user.getUserId());
-            model.addAttribute("filesMessage", "File is deleted successfully!");
-            model.addAttribute("files", files);
+            model.addAttribute("successMessage", "File is deleted successfully!");
+            //model.addAttribute("files", files);
         } catch (Exception e) {
             e.printStackTrace();
-            model.addAttribute("deleteError", e.getMessage());
+            model.addAttribute("errorMessage", e.getMessage());
         }
         //setLists(model);
-        return "home";
+        return "result";
     }
 
     @GetMapping("/file-view/{fileId}")
@@ -129,20 +150,21 @@ public class HomeController {
                 .body(new ByteArrayResource(file.getFiledata()));
     }
 
-    @PostMapping("/credential-delete")
+    /*@PostMapping("/credential-delete")
     public String deleteCredential(@RequestParam Integer credentialId, Authentication auth, Model model) {
         try {
             credentialService.deleteCredential(credentialId);
             //User user = (User) auth.getDetails();
             User user = userService.getUser(auth.getPrincipal().toString());
-            Credential credentials = credentialService.getCredentialByUserId(user.getUserId());
+            List<Credential> credentials = credentialService.getCredentialByUserId(user.getUserId());
             model.addAttribute("activeTab", "credentials");
+            model.addAttribute("credentials", "credentials");
             model.addAttribute("credentialsMessage", "Credential deleted!");
         } catch (Exception e) {
             model.addAttribute("credentialsError", e.getMessage());
         }
         //setLists(model);
         return "home";
-    }
+    }*/
 
 }
